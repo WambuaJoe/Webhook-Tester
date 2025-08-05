@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import ProfileManager from './ProfileManager';
 import RequestForm from './RequestForm';
 import ResponseDisplay from './ResponseDisplay';
@@ -11,8 +12,11 @@ const WebhookTester: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [activeTab, setActiveTab] = useState<'profiles' | 'tester' | 'chat'>('profiles');
-  const [profiles, setProfiles] = useState<WebhookProfile[]>([]);
-  const [activeProfile, setActiveProfile] = useState<WebhookProfile | null>(null);
+  const [profiles, setProfiles] = useLocalStorage<WebhookProfile[]>('webhook-profiles', []);
+  const [activeProfileId, setActiveProfileId] = useLocalStorage<string | null>('active-profile-id', null);
+  
+  // Derive active profile from stored ID
+  const activeProfile = profiles.find(p => p.id === activeProfileId) || null;
 
   const handleCreateProfile = (profileData: Omit<WebhookProfile, 'id' | 'createdAt'>) => {
     const newProfile: WebhookProfile = {
@@ -21,7 +25,7 @@ const WebhookTester: React.FC = () => {
       createdAt: new Date().toISOString(),
     };
     setProfiles(prev => [...prev, newProfile]);
-    setActiveProfile(newProfile);
+    setActiveProfileId(newProfile.id);
     // Auto-switch to tester tab after creating profile
     setActiveTab('tester');
   };
@@ -30,20 +34,17 @@ const WebhookTester: React.FC = () => {
     setProfiles(prev => prev.map(profile => 
       profile.id === id ? { ...profile, ...updates } : profile
     ));
-    if (activeProfile?.id === id) {
-      setActiveProfile(prev => prev ? { ...prev, ...updates } : null);
-    }
   };
 
   const handleDeleteProfile = (id: string) => {
     setProfiles(prev => prev.filter(profile => profile.id !== id));
-    if (activeProfile?.id === id) {
-      setActiveProfile(null);
+    if (activeProfileId === id) {
+      setActiveProfileId(null);
     }
   };
 
   const handleSelectProfile = (profile: WebhookProfile) => {
-    setActiveProfile(profile);
+    setActiveProfileId(profile.id);
   };
 
   const handleSendRequest = async (request: WebhookRequest) => {
