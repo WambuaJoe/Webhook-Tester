@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import ProfileManager from './ProfileManager';
 import RequestForm from './RequestForm';
 import ResponseDisplay from './ResponseDisplay';
@@ -14,6 +15,9 @@ const WebhookTester: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'profiles' | 'tester' | 'chat'>('profiles');
   const [profiles, setProfiles] = useLocalStorage<WebhookProfile[]>('webhook-profiles', []);
   const [activeProfileId, setActiveProfileId] = useLocalStorage<string | null>('active-profile-id', null);
+  
+  // Derive active profile from stored ID
+  const activeProfile = profiles.find(p => p.id === activeProfileId) || null;
   
   // Derive active profile from stored ID
   const activeProfile = profiles.find(p => p.id === activeProfileId) || null;
