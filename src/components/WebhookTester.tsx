@@ -22,6 +22,8 @@ const WebhookTester: React.FC = () => {
     };
     setProfiles(prev => [...prev, newProfile]);
     setActiveProfile(newProfile);
+    // Auto-switch to tester tab after creating profile
+    setActiveTab('tester');
   };
 
   const handleUpdateProfile = (id: string, updates: Partial<WebhookProfile>) => {
@@ -42,7 +44,6 @@ const WebhookTester: React.FC = () => {
 
   const handleSelectProfile = (profile: WebhookProfile) => {
     setActiveProfile(profile);
-    setActiveTab('tester');
   };
 
   const handleSendRequest = async (request: WebhookRequest) => {
@@ -198,6 +199,9 @@ const WebhookTester: React.FC = () => {
                   />
                   <span className="font-medium text-slate-800">{activeProfile.name}</span>
                   <span className="text-sm text-slate-500">({activeProfile.method})</span>
+                  <span className="text-xs text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                    Connected to Chat
+                  </span>
                 </div>
               </div>
             </div>
@@ -222,7 +226,10 @@ const WebhookTester: React.FC = () => {
           </div>
         </div>
       ) : (
-        <ChatInterface />
+        <ChatInterface 
+          activeProfile={activeProfile}
+          onProfileRequired={() => setActiveTab('profiles')}
+        />
       )}
     </div>
   );

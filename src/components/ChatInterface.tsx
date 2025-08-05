@@ -1,11 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Settings, MessageCircle, AlertCircle, Clock, Zap } from 'lucide-react';
-import { ChatMessage } from '../types/webhook';
+import { ChatMessage, WebhookProfile } from '../types/webhook';
 
-const ChatInterface: React.FC = () => {
+interface ChatInterfaceProps {
+  activeProfile: WebhookProfile | null;
+  onProfileRequired: () => void;
+}
+
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeProfile, onProfileRequired }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
-  const [webhookUrl, setWebhookUrl] = useState('https://httpbin.org/post');
+  const [webhookUrl, setWebhookUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [headers, setHeaders] = useState<Record<string, string>>({
@@ -13,6 +18,23 @@ const ChatInterface: React.FC = () => {
   });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Auto-configure chat when active profile changes
+  useEffect(() => {
+    if (activeProfile) {
+      setWebhookUrl(activeProfile.url);
+      
+      // Convert profile headers to chat headers format
+      const profileHeaders: Record<string, string> = {
+        'Content-Type': 'application/json'
+      };
+      activeProfile.headers.forEach(header => {
+        if (header.key && header.value) {
+          profileHeaders[header.key] = header.value;
+        }
+      });
+      setHeaders(profileHeaders);
+    }
+  }, [activeProfile]);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -114,8 +136,61 @@ const ChatInterface: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* Profile Status */}
+      {activeProfile ? (
+        <div className="mb-6 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="bg-emerald-50 px-6 py-4 border-b border-emerald-200">
+            <div className="flex items-center gap-3">
+              <div
+                className="w-4 h-4 rounded-full"
+                style={{ backgroundColor: activeProfile.color }}
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-emerald-800">
+                  Connected to {activeProfile.name}
+                </h3>
+                <p className="text-sm text-emerald-600">
+                  {activeProfile.method} • {activeProfile.url}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowSettings(!showSettings)}
+                className={`p-2 rounded-lg transition-colors ${
+                  showSettings 
+                    ? 'bg-emerald-200 text-emerald-700' 
+                    : 'text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100'
+                }`}
+              >
+                <Settings size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="mb-6 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="bg-orange-50 px-6 py-4 border-b border-orange-200">
+            <div className="flex items-center gap-3">
+              <AlertCircle className="text-orange-600" size={20} />
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-orange-800">
+                  No Webhook Profile Selected
+                </h3>
+                <p className="text-sm text-orange-600">
+                  Create or select a webhook profile to start chatting
+                </p>
+              </div>
+              <button
+                onClick={onProfileRequired}
+                className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                Manage Profiles
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Settings Panel */}
-      {showSettings && (
+      {showSettings && activeProfile && (
         <div className="mb-6 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
             <h3 className="text-lg font-semibold text-slate-800">Chat Configuration</h3>
@@ -161,23 +236,13 @@ const ChatInterface: React.FC = () => {
           <div className="flex items-center gap-3">
             <MessageCircle className="text-blue-600" size={20} />
             <h2 className="text-lg font-semibold text-slate-800">Webhook Chat</h2>
-            {webhookUrl && (
+            {activeProfile && (
               <span className="text-sm text-slate-500 truncate max-w-xs">
-                {webhookUrl}
+                {activeProfile.name}
               </span>
             )}
           </div>
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => setShowSettings(!showSettings)}
-              className={`p-2 rounded-lg transition-colors ${
-                showSettings 
-                  ? 'bg-blue-100 text-blue-600' 
-                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              <Settings size={16} />
-            </button>
             <button
               onClick={clearChat}
               className="px-3 py-1 text-sm text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
@@ -194,7 +259,7 @@ const ChatInterface: React.FC = () => {
               <MessageCircle size={48} className="text-slate-300 mx-auto mb-4" />
               <p className="text-slate-500 text-lg">Start a conversation</p>
               <p className="text-slate-400 text-sm">
-                {webhookUrl ? 'Send a message to begin chatting' : 'Configure your webhook URL first'}
+                {activeProfile ? 'Send a message to begin chatting' : 'Select a webhook profile first'}
               </p>
             </div>
           ) : (
@@ -255,10 +320,16 @@ const ChatInterface: React.FC = () => {
 
         {/* Input Area */}
         <div className="border-t border-slate-200 p-4">
-          {!webhookUrl ? (
+          {!activeProfile ? (
             <div className="flex items-center gap-2 text-orange-600 bg-orange-50 px-4 py-3 rounded-lg">
               <AlertCircle size={16} />
-              <span className="text-sm">Please configure your webhook URL in settings first</span>
+              <span className="text-sm">Please select a webhook profile to start chatting</span>
+              <button
+                onClick={onProfileRequired}
+                className="ml-auto px-3 py-1 bg-orange-600 hover:bg-orange-700 text-white text-sm rounded-lg transition-colors"
+              >
+                Select Profile
+              </button>
             </div>
           ) : (
             <div className="flex gap-3">
