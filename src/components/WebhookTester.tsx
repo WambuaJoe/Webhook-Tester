@@ -18,9 +18,6 @@ const WebhookTester: React.FC = () => {
   // Derive active profile from stored ID
   const activeProfile = profiles.find(p => p.id === activeProfileId) || null;
   
-  // Derive active profile from stored ID
-  const activeProfile = profiles.find(p => p.id === activeProfileId) || null;
-
   const handleCreateProfile = (profileData: Omit<WebhookProfile, 'id' | 'createdAt'>) => {
     const newProfile: WebhookProfile = {
       ...profileData,
