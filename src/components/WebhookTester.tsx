@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { useLocalStorage } from '../hooks/useLocalStorage';
 import ProfileManager from './ProfileManager';
 import RequestForm from './RequestForm';
 import ResponseDisplay from './ResponseDisplay';
