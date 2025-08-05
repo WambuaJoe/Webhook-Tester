@@ -150,7 +150,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeProfile, onProfileR
                   Connected to {activeProfile.name}
                 </h3>
                 <p className="text-sm text-emerald-600">
-                  {activeProfile.method} • {activeProfile.url}
+                  {activeProfile.method}
                 </p>
               </div>
               <button
