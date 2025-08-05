@@ -25,7 +25,7 @@ This project simulates a webhook receiver endpoint where incoming requests are c
 
 ## 🗂️ Tech Stack
 
-### Component
+### COMPONENT
 
 **Backend**
 
@@ -41,7 +41,10 @@ This project simulates a webhook receiver endpoint where incoming requests are c
 
 **Webhook Tools**
 
-Compatible with GitHub, GitLab, Stripe, etc. [github.com+1](https://github.com/Coveros/webhook-tester?utm_source=chatgpt.com)[github.com](https://github.com/tarampampam/webhook-tester?utm_source=chatgpt.com)[docs.github.com+1](https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/testing-webhooks?utm_source=chatgpt.com)
+Compatible with GitHub, GitLab, Stripe, etc. 
+- [github.com+1](https://github.com/Coveros/webhook-tester?utm_source=chatgpt.com)
+- [github.com](https://github.com/tarampampam/webhook-tester?utm_source=chatgpt.com)
+- [docs.github.com+1](https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/testing-webhooks?utm_source=chatgpt.com)
 
 ----------
 
@@ -82,7 +85,8 @@ Compatible with GitHub, GitLab, Stripe, etc. [github.com+1](https://github.com/C
 -   The `/healthcheck` route allows for quick readiness checks.
     
 -   For local testing of GitHub or external webhooks, use `smee.io` or a similar tunneling tool:  
-    [webhook.site](https://webhook.site/?utm_source=chatgpt.com)[dev.to+1](https://dev.to/robmarshall/how-to-use-hookdeckcom-to-test-and-debug-webhooks-2o20?utm_source=chatgpt.com)
+    - [webhook.site](https://webhook.site/?utm_source=chatgpt.com)
+    - [dev.to+1](https://dev.to/robmarshall/how-to-use-hookdeckcom-to-test-and-debug-webhooks-2o20?utm_source=chatgpt.com)
     
 -   Optionally, customize response codes or delay behavior via query parameters or configuration settings.
     
