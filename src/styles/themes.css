@@ -1,0 +1,19 @@
+[data-theme='light'] {
+  --bg-primary: rgb(248 250 252);
+  --bg-secondary: rgb(241 245 249);
+}
+
+[data-theme='dark'] {
+  --bg-primary: rgb(15 23 42);
+  --bg-secondary: rgb(30 41 59);
+}
+
+[data-theme='blue'] {
+  --bg-primary: rgb(239 246 255);
+  --bg-secondary: rgb(219 234 254);
+}
+
+[data-theme='green'] {
+  --bg-primary: rgb(236 253 245);
+  --bg-secondary: rgb(209 250 229);
+}
