@@ -1,19 +1,43 @@
 [data-theme='light'] {
   --bg-primary: rgb(248 250 252);
   --bg-secondary: rgb(241 245 249);
+  --text-primary: rgb(30 41 59);
+}
+
+[data-theme='light'] body {
+  @apply bg-gradient-to-br from-slate-50 to-slate-100;
 }
 
 [data-theme='dark'] {
   --bg-primary: rgb(15 23 42);
   --bg-secondary: rgb(30 41 59);
+  --text-primary: rgb(248 250 252);
+}
+
+[data-theme='dark'] body {
+  @apply bg-gradient-to-br from-slate-900 to-slate-800 text-slate-50;
+}
+
+[data-theme='dark'] div {
+  color-scheme: dark;
 }
 
 [data-theme='blue'] {
   --bg-primary: rgb(239 246 255);
   --bg-secondary: rgb(219 234 254);
+  --text-primary: rgb(30 58 138);
+}
+
+[data-theme='blue'] body {
+  @apply bg-gradient-to-br from-blue-50 to-blue-100;
 }
 
 [data-theme='green'] {
   --bg-primary: rgb(236 253 245);
   --bg-secondary: rgb(209 250 229);
+  --text-primary: rgb(5 46 22);
+}
+
+[data-theme='green'] body {
+  @apply bg-gradient-to-br from-emerald-50 to-emerald-100;
 }
