@@ -1,7 +1,7 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-type Theme = 'light' | 'dark' | 'blue' | 'green';
+type Theme = 'one-light' | 'github-light' | 'one-dark' | 'dracula';
 
 interface ThemeContextType {
   theme: Theme;
@@ -11,7 +11,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useLocalStorage<Theme>('app-theme', 'light');
+  const [theme, setTheme] = useLocalStorage<Theme>('app-theme', 'one-light');
 
   React.useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);

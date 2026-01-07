@@ -8,10 +8,10 @@ const ThemeSelector: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const themes = [
-    { value: 'light', label: 'Light', color: 'bg-slate-50', ring: 'ring-slate-300' },
-    { value: 'dark', label: 'Dark', color: 'bg-slate-900', ring: 'ring-slate-600' },
-    { value: 'blue', label: 'Blue', color: 'bg-blue-600', ring: 'ring-blue-400' },
-    { value: 'green', label: 'Green', color: 'bg-emerald-600', ring: 'ring-emerald-400' },
+    { value: 'one-light', label: 'One Light', color: 'bg-slate-100', ring: 'ring-slate-300' },
+    { value: 'github-light', label: 'GitHub Light', color: 'bg-white', ring: 'ring-slate-400' },
+    { value: 'one-dark', label: 'One Dark', color: 'bg-slate-700', ring: 'ring-blue-400' },
+    { value: 'dracula', label: 'Dracula', color: 'bg-slate-800', ring: 'ring-cyan-400' },
   ] as const;
 
   useEffect(() => {

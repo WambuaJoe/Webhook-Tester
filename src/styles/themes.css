@@ -1,43 +1,294 @@
-[data-theme='light'] {
-  --bg-primary: rgb(248 250 252);
-  --bg-secondary: rgb(241 245 249);
-  --text-primary: rgb(30 41 59);
+/* One Light Theme - Clean and minimal */
+[data-theme='one-light'] {
+  --bg-primary: #fafafa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f5f5f5;
+  --text-primary: #383a42;
+  --text-secondary: #a0a1a7;
+  --text-tertiary: #c18401;
+  --border-color: #e5e5e5;
+  --accent-primary: #4078f2;
+  --accent-secondary: #a626a4;
+  --success-color: #50a14f;
+  --error-color: #e45649;
+  --hover-bg: #f0f0f0;
+  color-scheme: light;
 }
 
-[data-theme='light'] body {
-  @apply bg-gradient-to-br from-slate-50 to-slate-100;
+[data-theme='one-light'] body {
+  @apply bg-[#fafafa] text-[#383a42];
 }
 
-[data-theme='dark'] {
-  --bg-primary: rgb(15 23 42);
-  --bg-secondary: rgb(30 41 59);
-  --text-primary: rgb(248 250 252);
+/* GitHub Light Theme - Professional and clean */
+[data-theme='github-light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #fafbfc;
+  --text-primary: #24292f;
+  --text-secondary: #57606a;
+  --text-tertiary: #0969da;
+  --border-color: #d0d7de;
+  --accent-primary: #0969da;
+  --accent-secondary: #8250df;
+  --success-color: #1a7f37;
+  --error-color: #d1242f;
+  --hover-bg: #f6f8fa;
+  color-scheme: light;
 }
 
-[data-theme='dark'] body {
-  @apply bg-gradient-to-br from-slate-900 to-slate-800 text-slate-50;
+[data-theme='github-light'] body {
+  @apply bg-[#ffffff] text-[#24292f];
 }
 
-[data-theme='dark'] div {
+/* One Dark Pro Theme - Popular and balanced */
+[data-theme='one-dark'] {
+  --bg-primary: #282c34;
+  --bg-secondary: #21252b;
+  --bg-tertiary: #2c313c;
+  --text-primary: #abb2bf;
+  --text-secondary: #5c6370;
+  --text-tertiary: #61afef;
+  --border-color: #3e4451;
+  --accent-primary: #61afef;
+  --accent-secondary: #c678dd;
+  --success-color: #98c379;
+  --error-color: #e06c75;
+  --hover-bg: #2c313c;
   color-scheme: dark;
 }
 
-[data-theme='blue'] {
-  --bg-primary: rgb(239 246 255);
-  --bg-secondary: rgb(219 234 254);
-  --text-primary: rgb(30 58 138);
+[data-theme='one-dark'] body {
+  @apply bg-[#282c34] text-[#abb2bf];
 }
 
-[data-theme='blue'] body {
-  @apply bg-gradient-to-br from-blue-50 to-blue-100;
+/* Dracula Theme - Dark with good contrast */
+[data-theme='dracula'] {
+  --bg-primary: #282a36;
+  --bg-secondary: #21222c;
+  --bg-tertiary: #2e323e;
+  --text-primary: #f8f8f2;
+  --text-secondary: #6272a4;
+  --text-tertiary: #8be9fd;
+  --border-color: #44475a;
+  --accent-primary: #8be9fd;
+  --accent-secondary: #ff79c6;
+  --success-color: #50fa7b;
+  --error-color: #ff5555;
+  --hover-bg: #2e323e;
+  color-scheme: dark;
 }
 
-[data-theme='green'] {
-  --bg-primary: rgb(236 253 245);
-  --bg-secondary: rgb(209 250 229);
-  --text-primary: rgb(5 46 22);
+[data-theme='dracula'] body {
+  @apply bg-[#282a36] text-[#f8f8f2];
 }
 
-[data-theme='green'] body {
-  @apply bg-gradient-to-br from-emerald-50 to-emerald-100;
+/* Component styling that uses theme variables */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Apply theme to all text elements */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+p, span, label, div {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+/* Card/Panel styling */
+.bg-white,
+.rounded-lg,
+.rounded-xl {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Tab styling */
+.border-b,
+[class*='border-'] {
+  border-color: var(--border-color) !important;
+  transition: border-color 0.3s ease;
+}
+
+/* Button styling */
+button:not([class*='bg-']) {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+/* Input/textarea styling */
+input,
+textarea {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent-primary);
+  transition: all 0.3s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Override specific button colors */
+[class*='bg-blue'] {
+  background-color: var(--accent-primary) !important;
+}
+
+[class*='bg-slate-50'],
+[class*='bg-slate-100'] {
+  background-color: var(--bg-tertiary) !important;
+}
+
+[class*='bg-slate-800'],
+[class*='bg-slate-900'] {
+  background-color: var(--bg-secondary) !important;
+}
+
+[class*='text-blue'] {
+  color: var(--accent-primary) !important;
+}
+
+[class*='text-slate'] {
+  color: var(--text-primary) !important;
+}
+
+.text-slate-400 {
+  color: var(--text-secondary) !important;
+}
+
+.text-slate-500 {
+  color: var(--text-secondary) !important;
+}
+
+.text-slate-600 {
+  color: var(--text-secondary) !important;
+}
+
+.hover\:bg-slate-100:hover,
+.hover\:bg-slate-200:hover {
+  background-color: var(--hover-bg) !important;
+}
+
+/* Tab active state */
+.border-blue-500 {
+  border-color: var(--accent-primary) !important;
+}
+
+.text-blue-600,
+.text-blue-700 {
+  color: var(--accent-primary) !important;
+}
+
+/* Message bubbles */
+.bg-blue-600 {
+  background-color: var(--accent-primary) !important;
+}
+
+.bg-red-50 {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--error-color) !important;
+}
+
+.text-red-800,
+.text-red-700 {
+  color: var(--error-color) !important;
+}
+
+.border-red-200 {
+  border-color: var(--error-color) !important;
+}
+
+/* Success states */
+.bg-emerald-50 {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--success-color) !important;
+}
+
+.text-emerald-600,
+.text-emerald-700,
+.text-emerald-800 {
+  color: var(--success-color) !important;
+}
+
+.bg-emerald-100,
+.bg-emerald-200 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+/* Orange states */
+.bg-orange-50,
+.bg-orange-100 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.text-orange-600,
+.text-orange-700,
+.text-orange-800 {
+  color: var(--error-color) !important;
+}
+
+.border-orange-200 {
+  border-color: var(--error-color) !important;
+}
+
+.bg-orange-600,
+.bg-orange-700 {
+  background-color: var(--accent-primary) !important;
+}
+
+/* Skeleton/loading states */
+.bg-slate-100 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.bg-slate-200 {
+  background-color: var(--hover-bg) !important;
+}
+
+.bg-slate-300 {
+  background-color: var(--border-color) !important;
+}
+
+/* Header backgrounds */
+.bg-slate-50 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.bg-slate-900 {
+  background-color: var(--bg-secondary) !important;
+}
+
+.bg-slate-800 {
+  background-color: var(--bg-primary) !important;
+}
+
+/* Border colors for all slate variants */
+.border-slate-200 {
+  border-color: var(--border-color) !important;
+}
+
+.border-slate-300 {
+  border-color: var(--border-color) !important;
+}
+
+/* Text colors for secondary text */
+.text-slate-700 {
+  color: var(--text-primary) !important;
+}
+
+/* Smooth transitions for all color changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
